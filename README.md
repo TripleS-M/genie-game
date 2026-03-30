@@ -1,29 +1,32 @@
-# 🧞 The Fine Print — AI Genie Wish Game
+# The Fine Print - AI Genie Wish Game
 
-An AI-powered genie game where players try to outsmart a clever LLM by making precise wishes.
+An AI-powered genie game where players try to outsmart a clever Large Language Model by making precise wishes.
 
-You get **3 wishes**. The genie will look for loopholes, ambiguity, and logical flaws in your wording. If your wish is poorly worded, the genie twists it. If it's airtight, you win!
+You get 3 wishes. The genie will look for loopholes, ambiguity, and logical flaws in your wording depending on the difficulty selected. If your wish is poorly worded, the genie twists it. If it's airtight, you win!
 
----
+## How It Works
 
-## 🎮 How It Works
+1. You select a difficulty level (Regular or Hard)
+2. You type a wish in plain English
+3. The AI genie analyzes your wording for flaws
+4. Flawed wish: the genie twists it and the Genie wins that round
+5. Well-worded wish: it is granted and the Player wins that round
+6. After 3 wishes, the final score and winner are revealed
 
-1. You type a wish in plain English
-2. The AI genie analyzes your wording for flaws
-3. **Flawed wish** → the genie twists it (Genie Wins)
-4. **Well-worded wish** → it's granted (Player Wins)
-5. After 3 wishes, the final score is revealed
+## Screenshots
 
----
+[Insert Screenshot of Menu Screen Here]
 
-## 📋 Prerequisites
+[Insert Screenshot of Gameplay Here]
 
-- **Python 3.10+**
-- **OpenAI API Key** — Get one at [platform.openai.com](https://platform.openai.com/)
+[Insert Screenshot of Game Over Here]
 
----
+## Prerequisites
 
-## 🚀 Setup & Installation
+- Python 3.10+
+- Groq API Key (Or OpenAI API Key if using an OpenAI model, default setup points to Groq's open-ai compatibility layer).
+
+## Setup & Installation
 
 ### 1. Clone the repository
 
@@ -35,109 +38,74 @@ cd genie-game
 ### 2. Install backend dependencies
 
 ```bash
-pip install -r backend/requirements.txt
+cd backend
+pip install -r requirements.txt
 ```
 
 ### 3. Install frontend dependencies
 
 ```bash
-pip install -r frontend/requirements.txt
+cd ../frontend
+pip install -r requirements.txt
 ```
 
-### 4. Configure your OpenAI API key
+### 4. Configure your API key
 
-Create or edit the file `backend/.env`:
+Create or edit the file `backend/.env` with your API key:
 
 ```
-OPENAI_API_KEY=sk-your-api-key-here
+API_KEY=gsk-your-api-key-here
 ```
 
-> ⚠️ **Never commit your API key to version control.** The `.env` file is already in `.gitignore`.
+## Running the Game
 
----
+You need two active terminals running simultaneously:
 
-## ▶️ Running the Game
-
-You need **two terminals** running at the same time:
-
-### Terminal 1 — Start the backend server
+### Terminal 1 - Background Server
 
 ```bash
 cd backend
 python main.py
 ```
 
-You should see:
-```
-INFO:     Uvicorn running on http://0.0.0.0:8000
-```
-
-### Terminal 2 — Launch the game
+### Terminal 2 - Game Client
 
 ```bash
 cd frontend
 python main.py
 ```
 
-A Pygame window will open with the game.
+A Pygame window will open and initiate the game.
 
----
+## Controls
 
-## 🕹️ Controls
+Action | Key
+--- | ---
+Select Difficulty | Up / Down Arrows
+Submit / Start / Continue | Enter
+Quit | Close Window
 
-| Action | Key |
-|--------|-----|
-| Start game | `Enter` |
-| Type your wish | Keyboard |
-| Submit wish | `Enter` |
-| Continue after result | `Enter` |
-| Play again (after game over) | `Enter` |
-| Quit | Close window |
+## Project Structure
 
----
-
-## 🏗️ Project Structure
-
-```
 genie-game/
-├── backend/
-│   ├── main.py            # FastAPI server with /wish endpoint
-│   ├── utils.py           # OpenAI integration & wish processing
-│   ├── requirements.txt   # Backend dependencies
-│   └── .env               # API key (not committed)
-│
-├── frontend/
-│   ├── main.py            # Pygame game loop
-│   ├── ui.py              # UI rendering (dialogue, input, genie)
-│   ├── game_state.py      # Game state machine
-│   ├── api.py             # Async API communication
-│   ├── settings.py        # Constants & configuration
-│   ├── requirements.txt   # Frontend dependencies
-│   └── assets/
-│       └── images/        # Genie state images
-│
-└── README.md
-```
+- backend/
+  - main.py (FastAPI server containing /wish endpoint)
+  - genie.py (OpenAI model integration and logic)
+  - prompts.py (System prompt files and context tuning)
+  - config.py (Configuration and keys)
+- frontend/
+  - main.py (Pygame game loop)
+  - ui.py (User Interface rendering constraints)
+  - game_state.py (State machines)
+  - api.py (Communication with backend API)
+  - settings.py (Color tokens and constants)
+- README.md
 
----
+## Tips for Outsmarting the Genie
 
-## 🛠️ Tech Stack
+- Be highly specific regarding quantities, currencies, and timeframes
+- Think hard about any missing clauses or loopholes that an AI model can exploit
+- Choose normal difficulty if you're finding it too difficult to constrain the model
 
-- **Frontend:** Python, Pygame
-- **Backend:** Python, FastAPI, Uvicorn
-- **AI:** OpenAI API (GPT-4o-mini)
-
----
-
-## 📝 Tips for Outsmarting the Genie
-
-- Be **specific** — specify quantities, currencies, timeframes
-- Cover **edge cases** — "with no negative consequences to anyone"
-- Avoid **ambiguity** — don't use words with multiple meanings
-- Think about **how** the wish could be fulfilled maliciously
-
----
-
-## 📄 License
-
-This project was built for the Hackiethon hackathon.
+## License
+Created for Hackiethon.

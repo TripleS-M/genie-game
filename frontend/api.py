@@ -21,8 +21,9 @@ class WishRequest:
             result = req.get_result()
     """
 
-    def __init__(self, wish: str):
+    def __init__(self, wish: str, difficulty: str = "regular"):
         self.wish = wish
+        self.difficulty = difficulty
         self._result = None
         self._error = None
         self._done = False
@@ -38,7 +39,7 @@ class WishRequest:
         try:
             response = requests.post(
                 f"{API_URL}/wish",
-                json={"wish": self.wish},
+                json={"wish": self.wish, "difficulty": self.difficulty},
                 timeout=API_TIMEOUT,
             )
             response.raise_for_status()
@@ -82,16 +83,17 @@ class WishRequest:
         return self._error is not None
 
 
-def send_wish(wish: str) -> WishRequest:
+def send_wish(wish: str, difficulty: str = "regular") -> WishRequest:
     """
     Create and start an async wish request.
     
     Args:
         wish: The player's wish text.
+        difficulty: The game mode ("regular" or "hard")
         
     Returns:
         WishRequest object to poll for completion.
     """
-    req = WishRequest(wish)
+    req = WishRequest(wish, difficulty)
     req.start()
     return req

@@ -31,24 +31,26 @@ class GameManager:
 
     def __init__(self):
         self.state = GameState.INTRO
-        self.wish_count = 0
+        self.wish_count = 1
         self.player_score = 0
         self.genie_score = 0
         self.wish_history: list[WishRecord] = []
         self.current_response = ""
         self.current_result = ""
         self.current_wish = ""
+        self.difficulty = "regular"
 
     def reset(self):
         """Reset the game to the beginning."""
         self.state = GameState.INTRO
-        self.wish_count = 0
+        self.wish_count = 1
         self.player_score = 0
         self.genie_score = 0
         self.wish_history = []
         self.current_response = ""
         self.current_result = ""
         self.current_wish = ""
+        # The difficulty setting is deliberately retained so the user doesn't have to select it again
 
     def start_game(self):
         """Transition from INTRO to INPUT."""
@@ -69,7 +71,6 @@ class GameManager:
         """
         self.current_response = response
         self.current_result = result
-        self.wish_count += 1
 
         # Update scores
         if result == "player_win":
@@ -86,9 +87,10 @@ class GameManager:
 
     def next_wish(self):
         """Transition from RESULT to INPUT or GAME_OVER."""
-        if self.wish_count >= MAX_WISHES:
+        if len(self.wish_history) >= MAX_WISHES:
             self.state = GameState.GAME_OVER
         else:
+            self.wish_count += 1
             self.state = GameState.INPUT
 
     def get_winner(self) -> str:

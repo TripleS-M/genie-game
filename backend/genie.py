@@ -1,9 +1,10 @@
 from config import client, MODEL_NAME
-from prompts import SYSTEM_PROMPT, build_user_prompt
+from prompts import REGULAR_PROMPT, HARD_PROMPT, build_user_prompt
 from utils import parse_response
 
-def analyse_wish(wish, history=[]):
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+def analyse_wish(wish, difficulty="regular", history=[]):
+    sys_prompt = HARD_PROMPT if difficulty == "hard" else REGULAR_PROMPT
+    messages = [{"role": "system", "content": sys_prompt}]
 
     for past_wish, past_response in history:
         messages.append({"role": "user", "content": build_user_prompt(past_wish)})
