@@ -15,9 +15,9 @@ You get 3 wishes. The genie will look for loopholes, ambiguity, and logical flaw
 
 ## Screenshots
 
-<img src="./images/start.png"  width="500">
+<img src="./frontend/assets/images/start.png"  width="500">
 
-<img src="./images/gameplay.png" width="500">
+<img src="./frontend/assets/images/gameplay.png" width="500">
 
 ## Prerequisites
 
