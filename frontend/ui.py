@@ -82,7 +82,7 @@ def draw_genie(surface: pygame.Surface, images: dict, state: str, tick: int):
         state = "idle"
     
     image = images[state]
-    x = (SCREEN_WIDTH - GENIE_IMAGE_SIZE[0]) // 2
+    x = GENIE_X
     y = GENIE_Y
 
     # Floating animation (subtle bob up and down)

@@ -53,19 +53,20 @@ FONT_SIZE_SMALL = 18
 FONT_SIZE_COUNTER = 20
 
 # ── Layout Constants ─────────────────────────────────────────────
-GENIE_IMAGE_SIZE = (280, 280)       # Genie display size
-GENIE_Y = 30                        # Genie vertical position
+GENIE_IMAGE_SIZE = (300, 300)       # Genie display size
+GENIE_X = 40                        # Genie horizontal position
+GENIE_Y = 120                        # Genie vertical position
 
-DIALOGUE_X = 60
-DIALOGUE_Y = 340
-DIALOGUE_WIDTH = 680
-DIALOGUE_HEIGHT = 200
+DIALOGUE_X = 380
+DIALOGUE_Y = 80
+DIALOGUE_WIDTH = 380
+DIALOGUE_HEIGHT = 300
 DIALOGUE_PADDING = 20
 
-INPUT_BOX_X = 100
-INPUT_BOX_Y = 580
-INPUT_BOX_WIDTH = 600
-INPUT_BOX_HEIGHT = 50
+INPUT_BOX_X = 40
+INPUT_BOX_Y = 560
+INPUT_BOX_WIDTH = 720
+INPUT_BOX_HEIGHT = 60
 
 COUNTER_X = 700
 COUNTER_Y = 20
