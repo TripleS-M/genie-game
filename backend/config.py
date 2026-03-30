@@ -7,8 +7,7 @@ load_dotenv()
 
 # constants
 API_KEY = os.getenv("API_KEY")
-BASE_URL = "https://api.groq.com/openai/v1"
-MODEL_NAME = "llama-3.3-70b-versatile"
+MODEL_NAME = "gpt-4o-mini"
 MAX_WISHES = 3
 
 
@@ -18,6 +17,5 @@ if not API_KEY:
 
 # create the client
 client = OpenAI(
-    api_key=API_KEY,
-    base_url=BASE_URL
+    api_key=API_KEY
 )
