@@ -73,6 +73,8 @@ def main():
                         game.start_game()
                         input_box.clear()
                         dialogue.set_text("What is your first wish, mortal?")
+                    elif event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                        game.difficulty = "hard" if game.difficulty == "regular" else "regular"
 
                 # ── INPUT state ──────────────────────────────────
                 elif game.state == GameState.INPUT:
@@ -80,7 +82,7 @@ def main():
                     if submitted:
                         game.submit_wish(submitted)
                         dialogue.set_text("")
-                        current_request = send_wish(submitted)
+                        current_request = send_wish(submitted, game.difficulty)
 
                 # ── CASTING state ────────────────────────────────
                 elif game.state == GameState.CASTING:
@@ -94,7 +96,7 @@ def main():
                         else:
                             game.next_wish()
                             if game.state == GameState.INPUT:
-                                wish_num = game.wish_count + 1
+                                wish_num = game.wish_count
                                 ordinals = {1: "first", 2: "second", 3: "third"}
                                 ordinal = ordinals.get(wish_num, f"#{wish_num}")
                                 dialogue.set_text(f"Very well... what is your {ordinal} wish?")
@@ -141,8 +143,9 @@ def main():
                                   game.get_winner(), game.wish_history)
         else:
             # ── Regular Game Screens ─────────────────────────────
-            # Genie
-            draw_genie(screen, genie_images, genie_state, tick)
+            # Genie (only show outside intro screen)
+            if game.state != GameState.INTRO:
+                draw_genie(screen, genie_images, genie_state, tick)
 
             # Wish counter (visible during gameplay)
             if game.state in (GameState.INPUT, GameState.CASTING, GameState.RESULT):
@@ -150,7 +153,7 @@ def main():
 
             # State-specific rendering
             if game.state == GameState.INTRO:
-                draw_intro_screen(screen, fonts, tick)
+                draw_intro_screen(screen, fonts, tick, game.difficulty)
 
             elif game.state == GameState.INPUT:
                 # Dialogue box and input

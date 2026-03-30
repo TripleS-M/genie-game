@@ -18,7 +18,13 @@ def load_genie_images() -> dict:
         try:
             img = pygame.image.load(path).convert_alpha()
             img = pygame.transform.smoothscale(img, GENIE_IMAGE_SIZE)
-            images[state] = img
+            
+            # Create a circular mask and blit using BLEND_RGBA_MIN
+            circular_image = pygame.Surface(GENIE_IMAGE_SIZE, pygame.SRCALPHA)
+            pygame.draw.circle(circular_image, (255, 255, 255, 255), (GENIE_IMAGE_SIZE[0]//2, GENIE_IMAGE_SIZE[1]//2), GENIE_IMAGE_SIZE[0]//2)
+            circular_image.blit(img, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
+            
+            images[state] = circular_image
         except (pygame.error, FileNotFoundError) as e:
             print(f"Warning: Could not load genie image for '{state}': {e}")
             # Create a placeholder surface
@@ -323,7 +329,7 @@ class InputBox:
 def draw_wish_counter(surface: pygame.Surface, fonts: dict, current: int, maximum: int):
     """Draw the wish counter in the top-right corner."""
     # Background pill
-    text = f"Wish {current + 1} / {maximum}" if current < maximum else f"Wish {maximum} / {maximum}"
+    text = f"Wish {current} / {maximum}"
     text_surf = fonts["counter"].render(text, True, GOLD)
     
     pill_w = text_surf.get_width() + 24
@@ -339,7 +345,7 @@ def draw_wish_counter(surface: pygame.Surface, fonts: dict, current: int, maximu
     surface.blit(text_surf, (pill_x + 12, pill_y + 6))
 
 
-def draw_intro_screen(surface: pygame.Surface, fonts: dict, tick: int):
+def draw_intro_screen(surface: pygame.Surface, fonts: dict, tick: int, selected_difficulty: str = "regular"):
     """Draw the intro/title screen."""
     # Title with glow effect
     title_text = "The Fine Print"
@@ -370,6 +376,23 @@ def draw_intro_screen(surface: pygame.Surface, fonts: dict, tick: int):
         desc_rect = desc_surf.get_rect(center=(SCREEN_WIDTH // 2, 340 + i * 35))
         surface.blit(desc_surf, desc_rect)
 
+    # Difficulty Selection
+    y_offset = 430
+    diff_text = fonts["body"].render("Use Up/Down Arrows to Select Difficulty", True, TEXT_DIM)
+    surface.blit(diff_text, diff_text.get_rect(center=(SCREEN_WIDTH // 2, y_offset)))
+    
+    # Regular Mode
+    reg_color = GOLD if selected_difficulty == "regular" else (100, 100, 120)
+    reg_text = f"> REGULAR <" if selected_difficulty == "regular" else "  REGULAR  "
+    reg_surf = fonts["subtitle"].render(reg_text, True, reg_color)
+    surface.blit(reg_surf, reg_surf.get_rect(center=(SCREEN_WIDTH // 2, y_offset + 40)))
+    
+    # Hard Mode
+    hard_color = GOLD if selected_difficulty == "hard" else (100, 100, 120)
+    hard_text = f"> HARD <" if selected_difficulty == "hard" else "  HARD  "
+    hard_surf = fonts["subtitle"].render(hard_text, True, hard_color)
+    surface.blit(hard_surf, hard_surf.get_rect(center=(SCREEN_WIDTH // 2, y_offset + 80)))
+
     # Pulsing "Press Enter" prompt
     alpha = int(140 + 115 * math.sin(tick * 0.05))
     prompt_color = (GOLD[0], GOLD[1], GOLD[2])
@@ -380,7 +403,7 @@ def draw_intro_screen(surface: pygame.Surface, fonts: dict, tick: int):
     alpha_surf.blit(prompt_surf, (0, 0))
     alpha_surf.set_alpha(alpha)
     
-    prompt_rect = alpha_surf.get_rect(center=(SCREEN_WIDTH // 2, 500))
+    prompt_rect = alpha_surf.get_rect(center=(SCREEN_WIDTH // 2, 580))
     surface.blit(alpha_surf, prompt_rect)
 
     # Decorative line
@@ -423,10 +446,10 @@ def draw_casting_overlay(surface: pygame.Surface, fonts: dict, tick: int):
 def draw_result_indicator(surface: pygame.Surface, fonts: dict, result: str, tick: int):
     """Draw a result indicator (GENIE WINS / PLAYER WINS) above the dialogue."""
     if result == "genie_win":
-        text = "⚡ GENIE WINS ⚡"
+        text = "GENIE WINS"
         color = GENIE_WIN_COLOR
     else:
-        text = "✨ YOU WIN! ✨"
+        text = "YOU WIN!"
         color = PLAYER_WIN_COLOR
 
     result_surf = fonts["subtitle"].render(text, True, color)

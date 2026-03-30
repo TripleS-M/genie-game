@@ -25,6 +25,7 @@ app.add_middleware(
 
 class WishRequest(BaseModel):
     wish: str
+    difficulty: str = "regular"
     history: Optional[List[List[Any]]] = []
 
 
@@ -51,7 +52,7 @@ def make_wish(request: WishRequest):
         raise HTTPException(status_code=400, detail="Wish cannot be empty!")
 
     # analyse_wish returns: {"verdict": "twisted"/"granted", "genie_response": "...", ...}
-    result = analyse_wish(request.wish, request.history)
+    result = analyse_wish(request.wish, request.difficulty, request.history)
     
     # Map back to what frontend expects
     verdict = result.get("verdict", "twisted")
