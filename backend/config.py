@@ -21,12 +21,3 @@ client = OpenAI(
     api_key=API_KEY,
     base_url=BASE_URL
 )
-
-# tests if the file is working
-if __name__ == "__main__":
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=[{"role": "user", "content": "say hello"}]
-    )
-
-    print(response.choices[0].message.content)
