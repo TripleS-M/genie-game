@@ -15,11 +15,9 @@ You get 3 wishes. The genie will look for loopholes, ambiguity, and logical flaw
 
 ## Screenshots
 
-[Insert Screenshot of Menu Screen Here]
+<img src="./images/start.png"  width="500">
 
-[Insert Screenshot of Gameplay Here]
-
-[Insert Screenshot of Game Over Here]
+<img src="./images/gameplay.png" width="500">
 
 ## Prerequisites
 
